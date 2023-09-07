@@ -17,7 +17,57 @@ struct LocationsView: View {
         ZStack {
             Map(coordinateRegion: $viewModel.mapRegion)
                 .ignoresSafeArea()
+            VStack(spacing: 0) {
+                VStack {
+                    Text(viewModel.mapLocation.name + ", " + viewModel.mapLocation.cityName)
+                        .font(.title3)
+                        .bold()
+                        .foregroundColor(.primary)
+                        .frame(height: 45)
+                        .frame(maxWidth: .infinity)
+                        .overlay(alignment: .leading) {
+                            if !viewModel.showLocationsList {
+                                Image(systemName: "arrow.down")
+                                    .font(.headline)
+                                    .foregroundColor(.primary)
+                                    .padding()
+                                    .onTapGesture {
+                                        withAnimation(.easeInOut) {
+                                            viewModel.showLocationsList.toggle()
+
+                                        }
+                                    }
+                            } else {
+                                Image(systemName: "arrow.up")
+                                    .font(.headline)
+                                    .foregroundColor(.primary)
+                                    .padding()
+                                    .onTapGesture {
+                                        withAnimation(.easeInOut) {
+                                            viewModel.showLocationsList.toggle()
+
+                                        }
+                                    }
+                            }
+                            
+                        }
+                    if viewModel.showLocationsList {
+                        LocationsListView()
+                            .listRowBackground(Color.clear)
+                    }
+                    
+
+                }
+                .background(.thickMaterial)
+                .cornerRadius(10)
+                .shadow(color: .black.opacity(0.3), radius: 20, x: 0, y: 15)
+                .padding()
+                                
+                Spacer()
+            }
+            
         }
+        
     }
 }
 
